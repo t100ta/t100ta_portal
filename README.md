@@ -1,5 +1,6 @@
 anacondaセットアップ
-    python仮想環境構築(anaconda)
+  
+  python仮想環境構築(anaconda)
         conda create -n NAME
 
     仮想環境切り替え
@@ -23,6 +24,7 @@ anacondaセットアップ
 
 
 Djangoセットアップ
+    
     Djangoインストール
         conda install django
 
@@ -41,5 +43,6 @@ Djangoセットアップ
 
 
 PyCharmのセットアップ
+    
     [ctrl] + [alt] + s で設定viewを開いてProjectInspectorを今回作成したPython仮想環境のパスを指定する
     ->エディターが仮想環境にインストールしたライブラリも認識できるようになる。
