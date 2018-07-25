@@ -1,6 +1,6 @@
 anacondaセットアップ
   
-  python仮想環境構築(anaconda)
+    python仮想環境構築(anaconda)
         conda create -n NAME
 
     仮想環境切り替え
