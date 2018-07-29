@@ -1,4 +1,4 @@
-"""t100ta URL Configuration
+"""t100ta_portal URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 from posts import views
 
 urlpatterns = [
     path(r'posts/', include('posts.urls')),
     path(r'admin/', admin.site.urls),
-]
+    path(r'posts/(?P<post_id>[0-9]+)/', views.post_detail),  # , name='post_detail'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

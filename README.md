@@ -36,13 +36,35 @@ Djangoセットアップ
 
     マイグレーション(一番最初に権限周りのデータをマイグレイト)
         python manage.py migrate
-
+        
+    マイグレーション(新しい定義ファイルmodelを検知)
+        python manage.py makemigrations
+        上記実行後
+        python manage.py migrate
+        
     アプリケーションの追加
         python manage.py startapp NAME
         ->settings.py内INSTALLED_APPSに参照させたいクラスを追加する
+        
+    管理者ユーザー作成
+        python manage.py createsuperuser
 
 
 PyCharmのセットアップ
     
     [ctrl] + [alt] + s で設定viewを開いてProjectInspectorを今回作成したPython仮想環境のパスを指定する
     ->エディターが仮想環境にインストールしたライブラリも認識できるようになる。
+
+その他必要なライブラリ
+    
+    pillow(画像処理)
+        pip install pillow
+        
+sqlite3の操作
+
+    sqlite3に入る
+        sqlite3 db,sqlite3
+        
+    テーブル一覧表示
+        .tables
+        

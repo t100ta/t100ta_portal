@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang = "ja-jp">
 <head>
+    <meta charset="UTF-8">
     <title>TimeLine</title>
 </head>
 <body>
-    <h2>TimeLine Page</h2>
+    <h1>Welcome to Tom's</h1>
+    <h2>TimeLine</h2>
+    {% for post in posts.all %}
+
+        #{{ post.id }} :
+        {{ post.title }}
+        <br/><br/>
+        {{ post.published }}
+        <br/><br/>
+        <img src="{{ post.image.url }}">
+        {{ post.summary }}
+        <br/><br/>
+
+    {% endfor %}
 </body>
 </html>
