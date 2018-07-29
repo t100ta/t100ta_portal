@@ -2,9 +2,15 @@
 <html lang="ja-jp">
 <head>
     <meta charset="UTF-8">
-    <title>{{ post_id }}</title>
+    <title>{{ post_id.title }}</title>
 </head>
 <body>
-
+    {{ post_id.title }}
+    <br/><br/>
+    {{ post_id.publish }}
+    <br/><br/>
+    <img src="{{ post_id.image.url }}">
+    <br/><br/>
+    {{ post_id.body }}
 </body>
 </html>
