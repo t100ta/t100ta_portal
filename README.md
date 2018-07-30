@@ -4,8 +4,10 @@ anacondaセットアップ
         conda create -n NAME
 
     仮想環境切り替え
-        activate NAME  <-Windows
-        source activate NAME <-macOS, Linux
+        Windowsの場合
+            activate NAME
+        macOS, Linuxの場合
+            source activate NAME
 
     仮想環境の終了
         deactivate
@@ -34,17 +36,19 @@ Djangoセットアップ
     起動
         python manage.py runserver
 
-    マイグレーション(一番最初に権限周りのデータをマイグレイト)
-        python manage.py migrate
+    マイグレーション
+        一番最初に権限周りのデータをマイグレイト
+            python manage.py migrate
         
-    マイグレーション(新しい定義ファイルmodelを検知)
-        python manage.py makemigrations
-        上記実行後
-        python manage.py migrate
+    マイグレーション
+        新しい定義ファイルmodelを検知してマイグレイト
+            python manage.py makemigrations
+            python manage.py migrate
         
     アプリケーションの追加
         python manage.py startapp NAME
-        ->settings.py内INSTALLED_APPSに参照させたいクラスを追加する
+        上記実行後settings.pyのINSTALLED_APPSに参照させたいクラスを追加する
+
         
     管理者ユーザー作成
         python manage.py createsuperuser
@@ -52,15 +56,16 @@ Djangoセットアップ
 
 PyCharmのセットアップ
     
-    [ctrl] + [alt] + s で設定viewを開いてProjectInspectorを今回作成したPython仮想環境のパスを指定する
-    ->エディターが仮想環境にインストールしたライブラリも認識できるようになる。
+    [ctrl] + [alt] + s で設定viewを開く。
+    ProjectInspectorを今回作成したPython仮想環境のパスを指定する。
+    エディターが仮想環境にインストールしたライブラリも認識できるようになる。
 
 その他必要なライブラリ
     
     pillow(画像処理)
         pip install pillow
         
-sqlite3の操作
+sqlite3のコマンド操作
 
     sqlite3に入る
         sqlite3 db,sqlite3
@@ -68,3 +73,22 @@ sqlite3の操作
     テーブル一覧表示
         .tables
         
+git操作で悩んだこと
+
+    .gitignoreを後から追加する
+        1.  .gitignoreファイルを作成する
+        2.  ファイル内にリポジトリから除外したいファイル、ディレクトリを追記
+        3.  .gitignoreファイルの状況から除外対象ファイルを一覧表示
+                git ls-files --full-name -i --exclude-from=.gitignore
+        4.  ローカルリポジトリから除外対象を削除
+                やり方①(手入力多め)
+                    git rm -r --cached ディレクトリ名orファイル名
+                やり方②(.ignoreファイルの内容を削除対象にする)
+                     git rm --cached `git ls-files --full-name -i --exclude-from=.gitignore`
+        5.  .gitignoreファイルをadd
+                git add .gitignore
+        6.  .gitignoreファイルと削除情報をコミット
+                git commit
+        7.  リモートリポジトリへpush
+                git push
+                
