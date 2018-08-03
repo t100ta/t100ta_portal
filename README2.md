@@ -13,6 +13,20 @@ Google Cloud SDKコマンド
     インスタンスの停止
         gcloud compute instances stop {INSTANCE_NAME}
         
+Linux(ubuntu)コマンド覚書
+
+    ユーザー一覧
+        cat /etc/passwd
+        
+    ユーザー削除(対象ユーザーのhome以下も削除)
+        sudo userdel -r {USER_NAME}
+        
+    Vimがインストールされているか確認
+        dpkg -l vim
+        
+    Vimのインストール
+        sudo apt-get install vim
+
 ソフトウェアインストール
     
     ソフトウェア一覧の更新
@@ -45,8 +59,8 @@ postgresqlコマンド
     ユーザーにデータベース参照権限を付与
         GRANT ALL PRIVILEGES ON DATABASE {DATABASE_NAME} TO {USER_NAME};
         
-    データベース一覧表示
-        \l;
+    データベース一覧表示(末尾にセミコロンは不要)
+        \l
         
     ユーザー一覧表示
         SELECT * FROM pg_shadow;
@@ -85,3 +99,47 @@ virtualenvの設定
     
     djanog、gunicorn、postgres用ライブラリのインストール
         pip install django gunicorn psycopg2
+        
+    pillowのインストール
+        pip install pillow
+        
+マイグレーション
+    
+    {APP_NAME}/{APP_NAME}/settings.pyを書きかえる。
+       
+       アプリ自体の実行可能設定
+            ALLOWED_HOSTS = ['実行を許可するマシンのIPアドレス']
+        
+        postgresへの変更対応
+            変更前
+                DATABASES = {
+                    'default': {
+                        'ENGINE': 'django.db.backends.sqlite3',
+                        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                    }
+                }
+            
+            変更後
+                DATABASES = {
+                    'default': {
+                #        'ENGINE': 'django.db.backends.sqlite3',
+                        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                        'NAME': '{DATABASE_NAME}',
+                        'USER': '{USER_NAME}',
+                        'PASSWORD': '{USER_PASSWORD}',
+                        'HOST': 'localhost',
+                        'PORT': '', #特に明記しなければデフォルトが適応される
+                    }
+                }
+                
+        pythonでのマイグレーション
+            python3 manage.py makemigrations
+            python3 manage.py migrate
+            
+        アプリの起動確認
+            python3 manage.py runserver 0.0.0.0:8000
+            ※GCPの場合、事前に
+                ファイアウォールルート ルール＞default-allow-http プロトコル/ポート
+            を tcp:8000 に変更するなどしてサーバーのポート開放を行う必要がある。
+                
