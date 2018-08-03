@@ -142,4 +142,8 @@ virtualenvの設定
             ※GCPの場合、事前に
                 ファイアウォールルート ルール＞default-allow-http プロトコル/ポート
             を tcp:8000 に変更するなどしてサーバーのポート開放を行う必要がある。
-                
+
+
+管理アカウント作成
+
+    python3 manage.py createsuperuser
