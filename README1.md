@@ -92,3 +92,9 @@ git操作で悩んだこと
         7.  リモートリポジトリへpush
                 git push
                 
+    ローカルをリモートリポジトリの状態に強制的に合わせる。
+        リモートの更新情報をとってくる
+            git fetch --all
+            
+        リモートの状態に強制上書き
+            git reset --hard origin/master

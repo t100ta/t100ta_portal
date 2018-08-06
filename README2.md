@@ -147,3 +147,115 @@ virtualenvの設定
 管理アカウント作成
 
     python3 manage.py createsuperuser
+    
+Gunicornの導入
+    
+    単体で動かす
+        gunicornがインストールされているか確認
+            which gunicorn
+        
+        gunicornの起動
+            gunicorn --bind 0.0.0.0:8000 {APP_NAME}.wsgi
+        
+    単体での自動起動設定
+    
+        システムファイルの確認
+            ls /etc/systemd/system
+            
+        参考:sshd.serviceファイルの内容を確認
+            vi /etc/systemd/system/sshd.service
+            
+        権限確認
+            ls -la /etc/systemd/system
+            
+        gunicorn.serviceファイルを作成
+            sudo vi /etc/systemd/system/gunicorn.service
+                
+                [Unit]
+                Description=gunicorn daemon
+                After=network.target
+                
+                [Service]
+                User=cjx_open_d
+                Group=www-data
+                WorkingDirectory=/home/{USER_NAME}/{APP_NAME}
+                ExecStart={virtualenv's directory}/bin/gunicorn --access-logfile - --wokers 3  --bind unix:/home/{USER_NAME}/{APP_NAME}/{APP_NAME}.sock {APP_NAME}.wsgi:application
+                
+                [Install]
+                WantedBy=multiuser.target
+        
+        gunicornのシステムコントロールへ登録
+            sudo systemctl start gunicorn
+            
+        gunicornの(自動)起動
+            sudo systemctl enable gunicorn
+            
+        gunicorn.serviceの存在確認
+            ls /etc/systemd/system/
+            
+        gunicorn.serviceの存在確認
+            ls /etc/systemd/system/multi-user.target.wants
+            
+        sockファイルの存在確認
+            ls /home/{USER_NAME}/{APP_NAME}
+            
+        gunicornの動作確認
+            sudo systemctl status gunicorn
+            (logファイルとして確認)
+            sudo journalctl -u gunicorn
+
+nginxの設定
+    
+    アプリ用設定ファイル作成先ディレクトリ
+        cd /etc/nginx/sites-available/
+    
+    ファイル作成
+        sudo vi {APP_NAME}
+            
+            server {
+                    listen 80;
+                    server_name {PUBLIC_IP};
+                    
+                    location = /favicon.ico {access_log off; log_not_found off;}
+                    location /static/ {
+                                root /home/{USER_NAME}/{APP_NAME};
+                    }
+                    
+                    location / {
+                            include proxy_params;
+                            proxy_pass http://unix:/home/{USER_NAME}/{APP_NAME}/{APP_NAME}.sock;
+                    }
+            }
+            
+    シンボリックリンクの作成
+        sudo ln -s /etc/nginx/sites-available/{APP_NAME} /etc/nginx/sites-enabled/
+        
+    確認
+        ls -la /etc/nginx/sites-enabled/
+        
+    設定のテスト
+        sudo nginx -t
+        
+    nginxの再起動
+        sudo systemctl restart nginx
+        
+    8000番ポートの無効化
+        sudo ufw delete allow 8000
+    
+    80番ポートの有効化
+        sudo ufw allow 'Nginx Full'
+            (GCPコンソールで80番を開放)
+    
+    gunicornの再起動
+        sudo systemctl restart gunicorn
+        
+    staticフォルダの有効化
+        sudo vi /etc/nginx/sites-available/{APP_NAME}
+            
+            location /static/admin {
+                    root /home/{USER_NAME}/{virtualenv}/lib/python3.5/site-packages/django/contrib/admin;
+
+            }
+            
+    nginxの再起動
+        sudo systemctl restart nginx
