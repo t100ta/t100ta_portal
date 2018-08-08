@@ -45,6 +45,9 @@ Djangoセットアップ
             python manage.py makemigrations
             python manage.py migrate
         
+    マイグレーションの履歴表示
+        python manage.py showmigrations     
+    
     アプリケーションの追加
         python manage.py startapp NAME
         上記実行後settings.pyのINSTALLED_APPSに参照させたいクラスを追加する
