@@ -1,3 +1,45 @@
 body {
     background:linear-gradient(35deg, #CCFFFF, #FFCCCC);
 }
+
+h1{
+    font-size: 30pt;
+}
+
+h2{
+    font-size: 24pt;
+}
+
+h3{
+    font-size: 16pt;
+}
+
+hr {
+	order-top: 1px solid #8c8b8b;
+}
+
+.container{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#home_pic{
+    max-height: 450px;
+    margin-bottom: 50px;
+}
+
+#timeline_post{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#thumbnail{
+    max-height: 250px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+#book_image{
+    max-height: 400px;
+    margin-bottom: 10px;
+}

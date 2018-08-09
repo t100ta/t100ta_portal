@@ -13,14 +13,10 @@
 <body>
 {% include 'common/header.html' %}
 <div class="container">
-    <br>
     <h2>{{ post.title }}</h2>
-    {{ post.published }}
-    <br/><br/>
-    <img src="{{ post.image.url }}" class="img-thumbnail rounded" style="max-height: 400px;"/>
-    <br/><br/>
-    {{ post.body }}
-    <br/><br/>
+    <p>{{ post.published }}</p>
+    <img src="{{ post.image.url }}" id="book_image" class="img-thumbnail rounded" />
+    <h3>{{ post.body | urlize | linebreaksbr }}</h3>
 </div>
 {% include 'common/footer.html' %}
 </body>

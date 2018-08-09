@@ -16,19 +16,16 @@
 {% include 'common/header.html' %}
 <div class="container">
     <h1 class="text-center">Welcome to Tom's</h1>
-    <img src="{% static 'posts/home.jpg' %}" class="img-fluid rounded mx-auto d-block" style="max-height: 400px;" />
-    <br>
-    <h3>TimeLine</h3>
+    <img src="{% static 'posts/home.jpg' %}" id="home_pic" class="img-fluid rounded mx-auto d-block" />
+    <h2>TimeLine</h2>
     {% for post in posts.all %}
-
-        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
-        <br/><br/>
-        {{ post.published }}
-        <br/><br/>
-        <img src="{{ post.image.url }}" class="img-thumbnail rounded" style="max-height: 200px;"/>
-        <br/><br/>
-        {{ post.summary }}
-        <hr/>
+        <div id="timeline_post">
+            <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+            <p>{{ post.published }}</p>
+            <img src="{{ post.image.url }}" id="thumbnail" class="img-thumbnail rounded" />
+            <!--{{ post.summary }}-->
+            <hr>
+        </div>
     {% endfor %}
 </div>
 {% include 'common/footer.html' %}
